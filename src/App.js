@@ -53,13 +53,13 @@ class App extends Component {
             Send message/token
           </Button>
           <br />
-          <p>
+          {/* <p>
             Click this button to unsubscribe from native push demo
           </p>
           <Button onClick={this.postMessageReactNative}
             variant="contained">
             Unsubscribe
-          </Button>
+          </Button> */}
         </header>
       </div>
     );
