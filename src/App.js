@@ -15,14 +15,22 @@ class App extends Component {
 
   postMessageReactNative = () => {
     logger.info(`Posting message ${this.state.inputMessage}`);
-    postMessageNativeIfExists(this.state.inputMessage);
+
+    // Prepare a standardize message format
+    const Message = {
+      type: "SUBSCRIBE_PUSH",
+      payload: {
+        message: this.state.inputMessage,
+      }
+    };
+    postMessageNativeIfExists(Message);
   }
 
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <h2>Inner pwa - webview</h2>
+          <h2>Inner pwa - webview ({window.MOBILE_ENV})</h2>
           <span>Message = {this.state.inputMessage}</span>
           <TextField
             onChange={(e) => this.setState({ inputMessage: e.target.value })}
