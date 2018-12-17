@@ -1,24 +1,57 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import { postMessageNativeIfExists } from './utils/native-helpers';
+const logger = require('logdown')('@simplewebsite');
 
 class App extends Component {
+  constructor() {
+    super()
+    this.state = {
+      inputMessage: "",
+    }
+  }
+
+  postMessageReactNative = () => {
+    logger.info(`Posting message ${this.state.inputMessage}`);
+    postMessageNativeIfExists(this.state.inputMessage);
+  }
+
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
+          <h2>Inner pwa - webview</h2>
+          <span>Message = {this.state.inputMessage}</span>
+          <TextField
+            onChange={(e) => this.setState({ inputMessage: e.target.value })}
+            value={this.state.inputMessage}
+            id="standard-full-width"
+            label="Label"
+            style={{ margin: 8 }}
+            placeholder="Placeholder"
+            fullWidth
+            margin="normal"
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
           <p>
-            Edit <code>src/App.js</code> and save to reload.
+            Click this button to send message to outer react native wrapper. Once wrapper receives, will redirect webview to success page as part of the demo
           </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
+          <Button onClick={this.postMessageReactNative}
+            variant="contained">
+            Send message/token
+          </Button>
+          <br />
+          <p>
+            Click this button to unsubscribe from native push demo
+          </p>
+          <Button onClick={this.postMessageReactNative}
+            variant="contained">
+            Unsubscribe
+          </Button>
         </header>
       </div>
     );
